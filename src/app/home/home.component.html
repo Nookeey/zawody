@@ -1,0 +1,26 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Imię</th>
+      <th scope="col">Karne</th>
+      <th scope="col">Kosz</th>
+      <th scope="col">Suma</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let participant of participant$ | async; let i = index">
+      <th scope="row">{{i+1}}</th>
+      <td>{{participant.name}}</td>
+      <td>{{participant.competition.karne}}</td>
+      <td>{{participant.competition.kosz}}</td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>
+
+<form [formGroup]="participantForm" (ngSubmit)="createParticipant()">
+  <input type="text" id="name" formControlName="name" placeholder="Imię">
+  <div *ngIf="participantForm.get('name').invalid && participantForm.get('name').dirty">Pole wymagane</div>
+  <button type="submit" [disabled]="participantForm.invalid">Dodaj</button>
+</form>

@@ -1,3 +1,5 @@
+import { Points } from './../models/points';
+import { Competition } from './../models/competition';
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
 import { Participant } from '../models/participant';
@@ -8,6 +10,8 @@ import 'rxjs/add/operator/map';
 export class ParticipantService {
 
   private path = '/participant';
+  private pathCompetition = '/competition';
+  private pathPoints = '/points';
 
   constructor(private db: AngularFireDatabase) {}
 
@@ -33,4 +37,45 @@ export class ParticipantService {
   remove(key) {
     this.db.list(this.path).remove(key);
   }
+
+  // ============================================================
+  getCompetition(): Observable<any[]> {
+    return this.db.list(this.pathCompetition)
+      .snapshotChanges()
+      .map(changes => {
+        return changes
+        .map(c => ({
+          key: c.payload.key, ...c.payload.val()
+         }));
+      });
+  }
+
+  createCompetition(competition: Competition) {
+    this.db.list(this.pathCompetition)
+      .push(competition)
+      .then(res => {
+        console.log('Competition created');
+      });
+  }
+
+  // ============================================================
+  setPoints(points: Points) {
+    this.db.list(this.pathPoints)
+      .push(points)
+      .then(res => {
+        console.log('Points set');
+      });
+  }
+
+  getPoints(): Observable<any[]> {
+    return this.db.list(this.pathPoints)
+      .snapshotChanges()
+      .map(changes => {
+        return changes
+        .map(c => ({
+          key: c.payload.key, ...c.payload.val()
+         }));
+      });
+  }
+
 }

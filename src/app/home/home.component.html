@@ -3,8 +3,7 @@
     <tr>
       <th scope="col">#</th>
       <th scope="col">Imię</th>
-      <th scope="col">Karne</th>
-      <th scope="col">Kosz</th>
+      <th scope="col" *ngFor="let competition of competition$ | async;">{{competition.name}}</th>
       <th scope="col">Suma</th>
     </tr>
   </thead>
@@ -12,8 +11,13 @@
     <tr *ngFor="let participant of participant$ | async; let i = index">
       <th scope="row">{{i+1}}</th>
       <td>{{participant.name}}</td>
-      <td>{{participant.competition.karne}}</td>
-      <td>{{participant.competition.kosz}}</td>
+      <td *ngFor="let competition of competition$ | async;">
+        <span *ngFor="let points of points$ | async;">
+          <span *ngIf="points.key_participant == participant.key && points.key_competition == competition.key">
+              {{points.points}}
+          </span>
+        </span>
+        <button (click)="setPoints(participant.key, competition.key)"></button></td>
       <td></td>
     </tr>
   </tbody>

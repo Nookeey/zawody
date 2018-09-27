@@ -1,17 +1,25 @@
+import { Points } from './../models/points';
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from 'angularfire2/database';
-import { Participant } from '../models/participant';
 import { Observable } from 'rxjs';
 import 'rxjs/add/operator/map';
 
 @Injectable()
-export class ParticipantService {
+export class PointsService {
 
-  private path = '/participant';
+  private path = '/points';
 
   constructor(private db: AngularFireDatabase) {}
 
-  getParticipant(): Observable<any[]> {
+  setPoints(points: Points) {
+    this.db.list(this.path)
+      .push(points)
+      .then(res => {
+        console.log('Points set');
+      });
+  }
+
+  getPoints(): Observable<any[]> {
     return this.db.list(this.path)
       .snapshotChanges()
       .map(changes => {
@@ -20,18 +28,6 @@ export class ParticipantService {
           key: c.payload.key, ...c.payload.val()
          }));
       });
-  }
-
-  create(participant: Participant) {
-    this.db.list(this.path)
-      .push(participant)
-      .then(res => {
-        console.log('Participant created');
-      });
-  }
-
-  remove(key) {
-    this.db.list(this.path).remove(key);
   }
 
 }

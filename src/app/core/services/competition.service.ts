@@ -1,17 +1,17 @@
+import { Competition } from './../models/competition';
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from 'angularfire2/database';
-import { Participant } from '../models/participant';
 import { Observable } from 'rxjs';
 import 'rxjs/add/operator/map';
 
 @Injectable()
-export class ParticipantService {
+export class CompetitionService {
 
-  private path = '/participant';
+  private path = '/competition';
 
   constructor(private db: AngularFireDatabase) {}
 
-  getParticipant(): Observable<any[]> {
+  getCompetition(): Observable<any[]> {
     return this.db.list(this.path)
       .snapshotChanges()
       .map(changes => {
@@ -22,16 +22,12 @@ export class ParticipantService {
       });
   }
 
-  create(participant: Participant) {
+  createCompetition(competition: Competition) {
     this.db.list(this.path)
-      .push(participant)
+      .push(competition)
       .then(res => {
-        console.log('Participant created');
+        console.log('Competition created');
       });
-  }
-
-  remove(key) {
-    this.db.list(this.path).remove(key);
   }
 
 }

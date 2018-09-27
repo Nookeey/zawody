@@ -13,11 +13,12 @@
       <td>{{participant.name}}</td>
       <td *ngFor="let competition of competition$ | async;">
         <span *ngFor="let points of points$ | async;">
-          <span *ngIf="points.key_participant == participant.key && points.key_competition == competition.key">
+          <span *ngIf="(points.key_participant == participant.key && points.key_competition == competition.key) ">
               {{points.points}}
           </span>
         </span>
-        <button (click)="setPoints(participant.key, competition.key)"></button></td>
+        <button (click)="setPoints(participant.key, competition.key)"></button>
+      </td>
       <td></td>
     </tr>
   </tbody>

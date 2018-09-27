@@ -1,3 +1,5 @@
+import { PointsService } from './../core/services/points.service';
+import { CompetitionService } from './../core/services/competition.service';
 import { Competition } from './../core/models/competition';
 import { ParticipantService } from './../core/services/participant.service';
 import { Component, OnInit } from '@angular/core';
@@ -13,16 +15,21 @@ import { Points } from '../core/models/points';
 })
 export class HomeComponent implements OnInit {
 
-  public participant$: Observable<any[]>;
-  public competition$: Observable<any[]>;
-  public points$: Observable<any[]>;
+  public participant$: Observable<Participant[]>;
+  public competition$: Observable<Competition[]>;
+  public points$: Observable<Points[]>;
 
-  participantForm: FormGroup;
-  participant = new Participant();
-  competition = new Competition();
-  points = new Points();
+  private participant = new Participant();
+  private competition = new Competition();
+  private points = new Points();
 
-  constructor(private participantService: ParticipantService) { }
+  private participantForm: FormGroup;
+
+  constructor(
+    private participantService: ParticipantService,
+    private competitionService: CompetitionService,
+    private pointsService: PointsService
+  ) {}
 
   ngOnInit() {
     this.participantForm = new FormGroup({
@@ -30,13 +37,8 @@ export class HomeComponent implements OnInit {
     });
 
     this.participant$ = this.getParticipant();
-    // this.createCompetition();
     this.competition$ = this.getCompetition();
     this.points$ = this.getPoints();
-    this.getCompetition().subscribe(res => {
-      console.log(res);
-    });
-
   }
 
   // ============================================================
@@ -45,12 +47,7 @@ export class HomeComponent implements OnInit {
   }
 
   createParticipant() {
-    // this.competition.karne = 0;
-    // this.competition.kosz = 0;
     this.participant.name = this.participantForm.value.name;
-    // this.participant.competition = this.competition;
-    // console.log(this.competition);
-    // console.log(this.participant);
     this.participantService.create(this.participant);
     this.onReset();
   }
@@ -62,28 +59,25 @@ export class HomeComponent implements OnInit {
 
   // ============================================================
   getCompetition() {
-    return this.participantService.getCompetition();
+    return this.competitionService.getCompetition();
   }
 
   createCompetition() {
     this.competition.name = 'Karne';
-    this.participantService.createCompetition(this.competition);
+    this.competitionService.createCompetition(this.competition);
   }
 
   // ============================================================
   setPoints(key_participant, key_competition) {
-    // console.log('key_participant: ' + key_participant);
-    // console.log('key_competition: ' + key_competition);
-
     this.points.key_participant = key_participant;
     this.points.key_competition = key_competition;
     this.points.points = 8;
     console.log(this.points);
 
-    this.participantService.setPoints(this.points);
+    this.pointsService.setPoints(this.points);
   }
 
   getPoints() {
-    return this.participantService.getPoints();
+    return this.pointsService.getPoints();
   }
 }

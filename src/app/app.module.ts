@@ -1,3 +1,6 @@
+import { MaterialModule } from './core/shared/material';
+import { PointsService } from './core/services/points.service';
+import { CompetitionService } from './core/services/competition.service';
 import { AppRoutingModule } from './app.routing.module';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { BrowserModule } from '@angular/platform-browser';
@@ -15,6 +18,8 @@ import { ParticipantService } from './core/services/participant.service';
 
 import { ReactiveFormsModule } from '@angular/forms';
 
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -23,13 +28,15 @@ import { ReactiveFormsModule } from '@angular/forms';
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
+    MaterialModule,
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
     AngularFireDatabaseModule,
     ReactiveFormsModule
   ],
-  providers: [ParticipantService],
+  providers: [ParticipantService, CompetitionService, PointsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

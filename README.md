@@ -4,6 +4,8 @@
 `npm install`<br>
 `npm install angular/fire firebase --save` /// `npm install angularfire2@latest --save`<br>
 `npm install rxjs-compat`<br>
+`npm install --save @angular/material @angular/cdk @angular/animations`<br>
+`npm install --save hammerjs`<br>
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.0.7.
 

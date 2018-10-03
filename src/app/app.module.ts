@@ -1,5 +1,4 @@
 import { MaterialModule } from './core/shared/material';
-import { PointsService } from './core/services/points.service';
 import { CompetitionService } from './core/services/competition.service';
 import { AppRoutingModule } from './app.routing.module';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
@@ -19,6 +18,7 @@ import { ParticipantService } from './core/services/participant.service';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { PointsService } from './core/services/points.service';
 
 @NgModule({
   declarations: [

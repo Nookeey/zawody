@@ -30,4 +30,7 @@ export class CompetitionService {
       });
   }
 
+  remove(key) {
+    this.db.list(this.path).remove(key);
+  }
 }

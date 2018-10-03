@@ -1,22 +1,23 @@
-import { Points } from './../models/points';
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from 'angularfire2/database';
+import { Points } from '../models/points';
 import { Observable } from 'rxjs';
-import 'rxjs/add/operator/map';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class PointsService {
 
   private path = '/points';
 
-  constructor(private db: AngularFireDatabase) {}
+  constructor(private db: AngularFireDatabase) { }
 
-  setPoints(points: Points) {
+  addPoints(points: Points) {
     this.db.list(this.path)
-      .push(points)
-      .then(res => {
-        console.log('Points set');
-      });
+    .push(points)
+    .then(res => {
+      console.log('Points added');
+    });
   }
 
   getPoints(): Observable<any[]> {
@@ -28,6 +29,11 @@ export class PointsService {
           key: c.payload.key, ...c.payload.val()
          }));
       });
+  }
+
+  editPoints(points: Points) {
+    this.db.list(this.path)
+      .update(points.key, {value: points.value});
   }
 
 }

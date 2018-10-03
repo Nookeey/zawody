@@ -1,6 +1,6 @@
 export class Points {
   key?: string;
-  key_participant: string;
-  key_competition: string;
-  points: number;
+  key_c: string;
+  key_p: string;
+  value: number;
 }

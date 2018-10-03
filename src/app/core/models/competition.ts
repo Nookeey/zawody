@@ -1,4 +1,5 @@
 export class Competition {
-  key?: number;
+  key?: string;
   name: string;
+  points?: number;
 }

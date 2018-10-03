@@ -12,20 +12,44 @@
       <th scope="row">{{i+1}}</th>
       <td>{{participant.name}}</td>
       <td *ngFor="let competition of competition$ | async;">
-        <span *ngFor="let points of points$ | async;">
-          <span *ngIf="(points.key_participant == participant.key && points.key_competition == competition.key) ">
-              {{points.points}}
-          </span>
+        <span (click)="setKeysAndShowFrom(participant.key, competition.key)">-
         </span>
-        <button (click)="setPoints(participant.key, competition.key)"></button>
+        <span *ngFor="let point of points$ | async;">
+            <span *ngIf="point.key_p == participant.key && point.key_c == competition.key">
+              <span (click)="setKeyPointsAndShowForm(point.key)">{{point.value}}</span>
+            </span>
+        </span>
       </td>
-      <td></td>
+      <td>suma</td>
     </tr>
   </tbody>
 </table>
+
 
 <form [formGroup]="participantForm" (ngSubmit)="createParticipant()">
   <input type="text" id="name" formControlName="name" placeholder="Imię">
   <div *ngIf="participantForm.get('name').invalid && participantForm.get('name').dirty">Pole wymagane</div>
   <button type="submit" [disabled]="participantForm.invalid">Dodaj</button>
 </form>
+
+<form [formGroup]="competitionForm" (ngSubmit)="createCompetition()">
+  <input type="text" id="name" formControlName="name" placeholder="Konkurencja">
+  <div *ngIf="competitionForm.get('name').invalid && competitionForm.get('name').dirty">Pole wymagane</div>
+  <button type="submit" [disabled]="competitionForm.invalid">Dodaj</button>
+</form>
+
+<div *ngIf="showAddPointsForm">
+  <p>Set Points</p>
+  <form [formGroup]="addPointsForm" (ngSubmit)="addPoints()">
+    <input type="text" id="v_points" formControlName="v_points" placeholder="Punkty">
+    <button type="submit">Dodaj</button>
+  </form>
+</div>
+
+<div *ngIf="showEditPointsForm">
+  <p>Edit Points</p>
+  <form [formGroup]="editPointsForm" (ngSubmit)="editPoints()">
+    <input type="text" id="e_points" formControlName="e_points" placeholder="Punkty">
+    <button type="submit">Dodaj</button>
+  </form>
+</div>

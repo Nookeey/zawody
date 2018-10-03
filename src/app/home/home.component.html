@@ -12,11 +12,10 @@
       <th scope="row">{{i+1}}</th>
       <td>{{participant.name}}</td>
       <td *ngFor="let competition of competition$ | async;">
-        <span (click)="setKeysAndShowFrom(participant.key, competition.key)">-
-        </span>
+        <span class="add_points" (click)="setKeysAndShowFrom(participant.key, competition.key)"></span>
         <span *ngFor="let point of points$ | async;">
             <span *ngIf="point.key_p == participant.key && point.key_c == competition.key">
-              <span (click)="setKeyPointsAndShowForm(point.key)">{{point.value}}</span>
+              <span class="points" (click)="setKeyPointsAndShowForm(point.key)">{{point.value}}</span>
             </span>
         </span>
       </td>

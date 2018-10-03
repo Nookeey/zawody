@@ -10,6 +10,22 @@ span:hover {
   cursor: pointer;
 }
 
+span.add_points {
+  display: inline-block;
+  background: rgb(255, 255, 255);
+  width: 100%;
+  height: 18px;
+}
+span.add_points:hover {
+  background: #ececec;
+}
+
+span.points {
+  color: #cc0000;
+  font-weight: bold;
+}
+
+
 input {
   border: none;
   outline: none;

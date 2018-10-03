@@ -32,6 +32,7 @@ export class PointsService {
   }
 
   editPoints(points: Points) {
+    console.log(points);
     this.db.list(this.path)
       .update(points.key, {value: points.value});
   }

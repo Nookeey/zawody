@@ -78,6 +78,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
   setKeyPointsAndShowForm(points_key) {
     this.showEditPointsForm = true;
     this.points_key = points_key;
+    console.log(this.points_key);
   }
 
   // ============================================================
@@ -121,6 +122,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this.points.value = this.editPointsForm.value.e_points;
     this.showEditPointsForm = false;
     this.pointsService.editPoints(this.points);
+    this.editPointsForm.reset();
   }
 
 }

@@ -6,6 +6,10 @@ th.mat-sort-header-sorted {
   color: black;
 }
 
+td {
+  padding: 0;
+}
+
 span:hover {
   cursor: pointer;
 }
@@ -14,10 +18,11 @@ span.add_points {
   display: inline-block;
   background: rgb(255, 255, 255);
   width: 100%;
-  height: 18px;
+  height: 49px;
 }
+
 span.add_points:hover {
-  background: #ececec;
+  border: 1px solid #d1d1d1;
 }
 
 span.points {
@@ -29,4 +34,10 @@ span.points {
 input {
   border: none;
   outline: none;
+}
+
+.active {
+  height: 50px;
+  width: 500px;
+  background: #d1d1d1;
 }

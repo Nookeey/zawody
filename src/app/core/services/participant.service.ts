@@ -21,7 +21,7 @@ export class ParticipantService {
          }));
       });
   }
-  
+
   create(participant: Participant) {
     this.db.list(this.path)
       .push(participant)

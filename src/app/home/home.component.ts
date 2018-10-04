@@ -1,7 +1,7 @@
 import { CompetitionService } from './../core/services/competition.service';
 import { Competition } from './../core/models/competition';
 import { ParticipantService } from './../core/services/participant.service';
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, Renderer2, ElementRef, ContentChild } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Participant } from '../core/models/participant';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
@@ -35,10 +35,16 @@ export class HomeComponent implements OnInit, AfterViewInit {
   public key_c: string;
   public points_key: string;
 
+  @ViewChild('navbar') navbar;
+  @ViewChild('vcTable') vcTable;
+  @ContentChild('vcTable') vcTbody;
+
   constructor(
     private participantService: ParticipantService,
     private competitionService: CompetitionService,
     private pointsService: PointsService,
+    private el: ElementRef,
+    private renderer: Renderer2
   ) {}
 
   ngOnInit() {
@@ -67,15 +73,25 @@ export class HomeComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
+    this.renderer.addClass(this.navbar.nativeElement, 'active');
+    this.renderer.addClass(this.vcTable.nativeElement, 'aaa');
+    this.renderer.addClass(this.vcTbody.nativeElement, 'aaa');
+
   }
 
   setKeysAndShowFrom(key_p, key_c) {
+    if (this.showEditPointsForm) {
+      this.showEditPointsForm = false;
+    }
     this.showAddPointsForm = true;
     this.key_p = key_p;
     this.key_c = key_c;
   }
 
   setKeyPointsAndShowForm(points_key) {
+    if (this.showAddPointsForm) {
+      this.showAddPointsForm = false;
+    }
     this.showEditPointsForm = true;
     this.points_key = points_key;
     console.log(this.points_key);
@@ -115,7 +131,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this.pointsService.addPoints(this.points);
     this.showAddPointsForm = false;
     this.addPointsForm.reset();
-  }
+2  }
 
   editPoints() {
     this.points.key = this.points_key;

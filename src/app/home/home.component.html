@@ -1,5 +1,5 @@
-<table class="table">
-  <thead>
+<table #vcTable class="table">
+  <thead #vcThead>
     <tr>
       <th scope="col">#</th>
       <th scope="col">Imię</th>
@@ -7,16 +7,16 @@
       <th scope="col">Suma</th>
     </tr>
   </thead>
-  <tbody>
+  <tbody #vcTbody>
     <tr *ngFor="let participant of participant$ | async; let i = index">
-      <th scope="row">{{i+1}}</th>
+      <td scope="row">{{i+1}}</td>
       <td>{{participant.name}}</td>
       <td *ngFor="let competition of competition$ | async;">
         <span class="add_points" (click)="setKeysAndShowFrom(participant.key, competition.key)"></span>
         <span *ngFor="let point of points$ | async;">
-            <span *ngIf="point.key_p == participant.key && point.key_c == competition.key">
-              <span class="points" (click)="setKeyPointsAndShowForm(point.key)">{{point.value}}</span>
-            </span>
+          <span *ngIf="point.key_p == participant.key && point.key_c == competition.key">
+            <span #span_points class="points" (click)="setKeyPointsAndShowForm(point.key)">{{point.value}}</span>
+          </span>
         </span>
       </td>
       <td>suma</td>
@@ -24,6 +24,9 @@
   </tbody>
 </table>
 
+<div class="aa">
+  <div #navbar class="navbar">Navbar</div>
+</div>
 
 <form [formGroup]="participantForm" (ngSubmit)="createParticipant()">
   <input type="text" id="name" formControlName="name" placeholder="Imię">

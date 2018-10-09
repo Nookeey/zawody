@@ -1,5 +1,5 @@
-<table #vcTable class="table">
-  <thead #vcThead>
+<table class="table">
+  <thead>
     <tr>
       <th scope="col">#</th>
       <th scope="col">Imię</th>
@@ -7,44 +7,23 @@
       <th scope="col">Suma</th>
     </tr>
   </thead>
-  <tbody #vcTbody>
+  <tbody>
     <tr *ngFor="let participant of participant$ | async; let i = index">
       <td scope="row">{{i+1}}</td>
       <td>{{participant.name}}</td>
-      <td *ngFor="let competition of competition$ | async;">
-        <span class="add_points" (click)="setKeysAndShowFrom(participant.key, competition.key)"></span>
-        <span *ngFor="let point of points$ | async;">
-          <span *ngIf="point.key_p == participant.key && point.key_c == competition.key">
-            <span #span_points class="points" (click)="setKeyPointsAndShowForm(point.key)">{{point.value}}</span>
-          </span>
-        </span>
-      </td>
-      <td>suma</td>
-    </tr>
-  </tbody>
-</table>
-
-<table>
-  <thead>
-    <tr>
-      <th>#</th>
-      <th>Name</th>
-      <th *ngFor="let thname of thpoints">{{thname}}</th>
-      <th>Suma</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let item of items; let i = index">
-      <td>{{i+1}}</td>
-      <td>{{item.name}}</td>
-      <td *ngFor="let point of item.points">
-        {{point.value}}
+      <td *ngFor="let competition of competition$ | async; let j = index">
+        <ng-container *ngIf="participant.points !== undefined">
+          <span class="points" *ngIf="participant.points[competition.name] !== undefined" (click)="setPKeyCName(participant.key, competition.name)">{{participant.points[competition.name].points}}</span>
+          <span class="points" *ngIf="participant.points[competition.name] === undefined" (click)="setPKeyCName(participant.key, competition.name)"></span>
+        </ng-container>
+        <ng-container *ngIf="participant.points === undefined">
+            <span class="points" (click)="setPKeyCName(participant.key, competition.name)"></span>
+        </ng-container>
       </td>
       <td>{{total[i]}}</td>
     </tr>
   </tbody>
 </table>
-
 
 <form [formGroup]="participantForm" (ngSubmit)="createParticipant()">
   <input type="text" id="name" formControlName="name" placeholder="Imię">
@@ -58,18 +37,12 @@
   <button type="submit" [disabled]="competitionForm.invalid">Dodaj</button>
 </form>
 
-<div *ngIf="showAddPointsForm">
-  <p>Set Points</p>
-  <form [formGroup]="addPointsForm" (ngSubmit)="addPoints()">
-    <input type="text" id="v_points" formControlName="v_points" placeholder="Punkty">
-    <button type="submit">Dodaj</button>
-  </form>
-</div>
-
-<div *ngIf="showEditPointsForm">
-  <p>Edit Points</p>
-  <form [formGroup]="editPointsForm" (ngSubmit)="editPoints()">
-    <input type="text" id="e_points" formControlName="e_points" placeholder="Punkty">
-    <button type="submit">Dodaj</button>
-  </form>
-</div>
+<ng-container *ngIf="showSetPointsForm">
+  <div>
+    <p>Set Points</p>
+    <form [formGroup]="setPointsForm" (ngSubmit)="setPoints()">
+      <input type="text" id="s_points" formControlName="s_points" placeholder="Punkty">
+      <button type="submit">Dodaj</button>
+    </form>
+  </div>
+</ng-container>

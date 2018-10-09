@@ -18,7 +18,6 @@ import { ParticipantService } from './core/services/participant.service';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import { PointsService } from './core/services/points.service';
 
 @NgModule({
   declarations: [
@@ -36,7 +35,7 @@ import { PointsService } from './core/services/points.service';
     AngularFireDatabaseModule,
     ReactiveFormsModule
   ],
-  providers: [ParticipantService, CompetitionService, PointsService],
+  providers: [ParticipantService, CompetitionService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

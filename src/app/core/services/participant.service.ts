@@ -34,4 +34,9 @@ export class ParticipantService {
     this.db.list(this.path).remove(key);
   }
 
+  setPoints(participantKey, competiton, points) {
+    this.db.list('/participant/' + participantKey + '/')
+      .set('points/' + competiton + '/', {points: points});
+  }
+
 }

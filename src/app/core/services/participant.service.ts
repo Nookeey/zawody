@@ -35,8 +35,13 @@ export class ParticipantService {
   }
 
   setPoints(participantKey, competiton, points) {
-    this.db.list('/participant/' + participantKey + '/')
+    this.db.list(this.path + '/' + participantKey + '/')
       .set('points/' + competiton + '/', {points: points});
+  }
+
+  updateTotal(participantKey, total) {
+    this.db.list(this.path)
+      .update(participantKey, {total: total});
   }
 
 }

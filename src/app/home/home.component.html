@@ -1,48 +1,63 @@
-<table class="table">
+<table class="table table-striped">
   <thead>
     <tr>
-      <th scope="col">#</th>
-      <th scope="col">Imię</th>
-      <th scope="col" *ngFor="let competition of competition$ | async;">{{competition.name}}</th>
-      <th scope="col">Suma</th>
+      <th id="th-id" scope="col">#</th>
+      <th id="th-name" scope="col">Zawodnik</th>
+      <ng-container *ngFor="let competition of competition$ | async;">
+        <th scope="col">{{competition.name}}</th>
+      </ng-container>
+      <th id="th-suma" scope="col">Suma</th>
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let participant of participant$ | async; let i = index">
-      <td scope="row">{{i+1}}</td>
-      <td>{{participant.name}}</td>
-      <td *ngFor="let competition of competition$ | async; let j = index">
-        <ng-container *ngIf="participant.points !== undefined">
-          <span class="points" *ngIf="participant.points[competition.name] !== undefined" (click)="setPKeyCName(participant.key, competition.name)">{{participant.points[competition.name].points}}</span>
-          <span class="points" *ngIf="participant.points[competition.name] === undefined" (click)="setPKeyCName(participant.key, competition.name)"></span>
+    <ng-container *ngFor="let participant of participant$ | async; let i = index">
+      <tr>
+        <td class="td-id" scope="row">{{i+1}}</td>
+        <td class="td-name">{{participant.name}}</td>
+        <ng-container *ngFor="let competition of competition$ | async; let j = index">
+          <ng-container *ngIf="participant.points !== undefined">
+            <td class="points" *ngIf="participant.points[competition.name] !== undefined" (click)="setPKeyCName(participant.key, participant.name, competition.name)">{{participant.points[competition.name].points}}</td>
+            <td class="points" *ngIf="participant.points[competition.name] === undefined" (click)="setPKeyCName(participant.key, participant.name, competition.name)"></td>
+          </ng-container>
+          <ng-container *ngIf="participant.points === undefined">
+            <td class="points" (click)="setPKeyCName(participant.key, participant.name, competition.name)"></td>
+          </ng-container>
         </ng-container>
-        <ng-container *ngIf="participant.points === undefined">
-            <span class="points" (click)="setPKeyCName(participant.key, competition.name)"></span>
-        </ng-container>
-      </td>
-      <td>{{total[i]}}</td>
-    </tr>
+        <td>{{participant.total}}</td>
+      </tr>
+    </ng-container>
   </tbody>
 </table>
 
-<form [formGroup]="participantForm" (ngSubmit)="createParticipant()">
-  <input type="text" id="name" formControlName="name" placeholder="Imię">
-  <div *ngIf="participantForm.get('name').invalid && participantForm.get('name').dirty">Pole wymagane</div>
-  <button type="submit" [disabled]="participantForm.invalid">Dodaj</button>
-</form>
 
-<form [formGroup]="competitionForm" (ngSubmit)="createCompetition()">
-  <input type="text" id="name" formControlName="name" placeholder="Konkurencja">
-  <div *ngIf="competitionForm.get('name').invalid && competitionForm.get('name').dirty">Pole wymagane</div>
-  <button type="submit" [disabled]="competitionForm.invalid">Dodaj</button>
-</form>
-
-<ng-container *ngIf="showSetPointsForm">
-  <div>
-    <p>Set Points</p>
-    <form [formGroup]="setPointsForm" (ngSubmit)="setPoints()">
-      <input type="text" id="s_points" formControlName="s_points" placeholder="Punkty">
-      <button type="submit">Dodaj</button>
-    </form>
-  </div>
-</ng-container>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-3">
+      <form [formGroup]="participantForm" (ngSubmit)="createParticipant()">
+        <mat-form-field>
+          <input matInput type="text" id="name" formControlName="name" placeholder="Zawodnik">
+          <mat-error *ngIf="participantForm.get('name').invalid && participantForm.get('name').dirty">Pole wymagane.</mat-error>
+        </mat-form-field>
+        <button mat-raised-button color="primary" type="submit" [disabled]="participantForm.invalid">Dodaj</button>
+      </form>
+    </div>
+    <div class="col-sm-3">
+      <form [formGroup]="competitionForm" (ngSubmit)="createCompetition()">
+        <mat-form-field>
+          <input matInput type="text" id="name" formControlName="name" placeholder="Konkurencja">
+          <mat-error *ngIf="competitionForm.get('name').invalid && competitionForm.get('name').dirty">Pole wymagane.</mat-error>
+        </mat-form-field>
+        <button mat-raised-button color="primary" type="submit" [disabled]="competitionForm.invalid">Dodaj</button>
+      </form>
+    </div>
+    <div class="col-sm-3">
+      <ng-container *ngIf="showSetPointsForm">
+          <form [formGroup]="setPointsForm" (ngSubmit)="setPoints()">
+              <mat-form-field>
+                <input matInput type="number" id="s_points" formControlName="s_points" placeholder="Punkty: {{selectedParticipant}} - {{selectedCompetition}}">
+              </mat-form-field>
+              <button mat-raised-button color="primary" type="submit">Dodaj</button>
+          </form>
+      </ng-container>
+    </div>
+</div>

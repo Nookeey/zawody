@@ -26,8 +26,9 @@ export class HomeComponent implements OnInit, AfterViewInit {
   public setPointsForm: FormGroup;
 
   public competitionArray = ['A', 'B'];
-  public total = [];
-  public t: number;
+
+  public selectedParticipant: string;
+  public selectedCompetition: string;
 
   constructor(
     private participantService: ParticipantService,
@@ -55,9 +56,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this.competition$ = this.getCompetition();
   }
 
-  ngAfterViewInit() {
-    this.setTotal();
-  }
+  ngAfterViewInit() {}
+
   // ============================================================
   getParticipant() {
     return this.participantService.getParticipant();
@@ -65,6 +65,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   createParticipant() {
     this.participant.name = this.participantForm.value.name;
+    this.participant.total = 0;
     this.participantService.create(this.participant);
     this.participantForm.reset();
   }
@@ -81,9 +82,11 @@ export class HomeComponent implements OnInit, AfterViewInit {
   }
 
   // ============================================================
-  setPKeyCName(participantKey, competitionName) {
+  setPKeyCName(participantKey, participantName, competitionName) {
     this.participant.key = participantKey;
     this.competition.name = competitionName;
+    this.selectedParticipant = participantName;
+    this.selectedCompetition = competitionName;
     this.showSetPointsForm = true;
   }
 
@@ -108,7 +111,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
             }
           }
         }
-        this.total.push(t);
+        this.participantService.updateTotal(e.key, t);
         t = 0;
       });
     });

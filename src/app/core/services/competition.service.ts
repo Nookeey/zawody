@@ -23,11 +23,7 @@ export class CompetitionService {
   }
 
   createCompetition(competition: Competition) {
-    this.db.list(this.path)
-      .push(competition)
-      .then(res => {
-        console.log('Competition created');
-      });
+    this.db.list(this.path).push(competition);
   }
 
   remove(key) {

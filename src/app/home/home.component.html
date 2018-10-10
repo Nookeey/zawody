@@ -52,12 +52,14 @@
     </div>
     <div class="col-sm-3">
       <ng-container *ngIf="showSetPointsForm">
-          <form [formGroup]="setPointsForm" (ngSubmit)="setPoints()">
-              <mat-form-field>
-                <input matInput type="number" id="s_points" formControlName="s_points" placeholder="Punkty: {{selectedParticipant}} - {{selectedCompetition}}">
-              </mat-form-field>
-              <button mat-raised-button color="primary" type="submit">Dodaj</button>
-          </form>
+        <form [formGroup]="setPointsForm" (ngSubmit)="setPoints()">
+          <mat-form-field>
+            <input matInput type="number" id="s_points" formControlName="s_points" placeholder="Punkty: {{selectedParticipant}} - {{selectedCompetition}}">
+          </mat-form-field>
+          <button mat-raised-button color="primary" type="submit">Dodaj</button>
+        </form>
       </ng-container>
     </div>
+  </div>
 </div>
+

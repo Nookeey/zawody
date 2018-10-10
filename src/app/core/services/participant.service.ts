@@ -23,11 +23,7 @@ export class ParticipantService {
   }
 
   create(participant: Participant) {
-    this.db.list(this.path)
-      .push(participant)
-      .then(res => {
-        console.log('Participant created');
-      });
+    this.db.list(this.path).push(participant);
   }
 
   remove(key) {

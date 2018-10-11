@@ -25,7 +25,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
   public competitionForm: FormGroup;
   public setPointsForm: FormGroup;
 
-  public competitionNameArray = [];
   public participantKeyArray = [];
 
   public selectedParticipant: string;
@@ -81,8 +80,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   // ============================================================
   getCompetition() {
-    this.competitionService.getCompetition()
-      .subscribe(res => res.forEach(r => this.competitionNameArray.push(r.name)));
     return this.competitionService.getCompetition();
   }
 

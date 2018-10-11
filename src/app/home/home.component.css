@@ -21,3 +21,10 @@ input {
 .mat-form-field { width: calc(100% - 100px); }
 
 form { display: flex; align-items: center; justify-content: space-between; }
+
+
+
+.remove { display: inline-block; position: relative; visibility: hidden; }
+.remove:hover { cursor: pointer; }
+.remove::after { content: url('/assets/img/close.svg'); position: absolute; top: -17px; left: 0; }
+

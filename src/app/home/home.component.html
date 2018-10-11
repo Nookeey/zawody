@@ -1,33 +1,45 @@
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th id="th-id" scope="col">#</th>
-      <th id="th-name" scope="col">Zawodnik</th>
-      <ng-container *ngFor="let competition of competition$ | async;">
-        <th scope="col">{{competition.name}}</th>
-      </ng-container>
-      <th id="th-suma" scope="col">Suma</th>
-    </tr>
-  </thead>
-  <tbody>
-    <ng-container *ngFor="let participant of participant$ | async; let i = index">
-      <tr>
-        <td class="td-id" scope="row">{{i+1}}</td>
-        <td class="td-name">{{participant.name}}</td>
-        <ng-container *ngFor="let competition of competition$ | async; let j = index">
-          <ng-container *ngIf="participant.points !== undefined">
-            <td class="points" *ngIf="participant.points[competition.name] !== undefined" (click)="setPKeyCName(participant.key, participant.name, competition.name)">{{participant.points[competition.name].points}}</td>
-            <td class="points" *ngIf="participant.points[competition.name] === undefined" (click)="setPKeyCName(participant.key, participant.name, competition.name)"></td>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th id="th-id" scope="col">#</th>
+            <th id="th-name" scope="col">Zawodnik</th>
+            <ng-container *ngFor="let competition of competition$ | async;">
+              <th appRemove scope="col">
+                {{competition.name}}
+                <i class="material-icons" #vcRspan class="remove" (click)="removeCompetition(competition.key, competition.name)"></i>
+              </th>
+            </ng-container>
+            <th id="th-suma" scope="col">Suma</th>
+          </tr>
+        </thead>
+        <tbody>
+          <ng-container *ngFor="let participant of participant$ | async; let i = index">
+            <tr>
+              <td class="td-id" scope="row">{{i+1}}</td>
+              <td appRemove class="td-name">
+                {{participant.name}}
+                <i class="material-icons" #vcRspan class="remove" (click)="removeParticipant(participant.key)"></i>
+              </td>
+              <ng-container *ngFor="let competition of competition$ | async; let j = index">
+                <ng-container *ngIf="participant.points !== undefined">
+                  <td class="points" *ngIf="participant.points[competition.name] !== undefined" (click)="setPKeyCName(participant.key, participant.name, competition.name)">{{participant.points[competition.name].points}}</td>
+                  <td class="points" *ngIf="participant.points[competition.name] === undefined" (click)="setPKeyCName(participant.key, participant.name, competition.name)"></td>
+                </ng-container>
+                <ng-container *ngIf="participant.points === undefined">
+                  <td class="points" (click)="setPKeyCName(participant.key, participant.name, competition.name)"></td>
+                </ng-container>
+              </ng-container>
+              <td>{{participant.total}}</td>
+            </tr>
           </ng-container>
-          <ng-container *ngIf="participant.points === undefined">
-            <td class="points" (click)="setPKeyCName(participant.key, participant.name, competition.name)"></td>
-          </ng-container>
-        </ng-container>
-        <td>{{participant.total}}</td>
-      </tr>
-    </ng-container>
-  </tbody>
-</table>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
 
 
 <div class="container-fluid">
@@ -62,4 +74,3 @@
     </div>
   </div>
 </div>
-

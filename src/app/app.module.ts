@@ -18,12 +18,14 @@ import { ParticipantService } from './core/services/participant.service';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { RemoveDirective } from './core/shared/directive/remove.directive';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    RemoveDirective
   ],
   imports: [
     BrowserModule,

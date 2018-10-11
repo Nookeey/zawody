@@ -40,4 +40,19 @@ export class ParticipantService {
       .update(participantKey, {total: total});
   }
 
+  getParticipantPoints(key): Observable<any[]> {
+    return this.db.list(this.path + '/' + key + '/points')
+      .snapshotChanges()
+        .map(changes => {
+          return changes
+          .map(c => ({
+            key: c.payload.key, ...c.payload.val()
+          }));
+        });
+  }
+
+  removePoints(k, competition) {
+    this.db.list(this.path + '/' + k + '/points').remove(competition);
+  }
+
 }
